@@ -86,7 +86,7 @@
 
   <!-- INTEL REALSENSE T265 -->
 
-  <xacro:macro name="realsense_T265" params="sensor_name parent_link rate *origin">
+  <xacro:macro name="realsense_T265" params="sensor_name parent_link rate odom_frame:='world' *origin">
 
     <joint name="${sensor_name}_odom_frame_joint" type="fixed">
         <parent link="${parent_link}"/>
@@ -186,7 +186,7 @@
             <update_rate>${rate}</update_rate>
             <visualize>false</visualize>
             <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-                <topicName>${sensor_name}/gyro/sample</topicName>
+                <topicName>${sensor_name}/imu/data</topicName>
                 <bodyName>${sensor_name}_pose_frame</bodyName>
                 <updateRateHZ>${rate}</updateRateHZ>
                 <gaussianNoise>0.000001</gaussianNoise>
@@ -209,9 +209,9 @@
             <alwaysOn>true</alwaysOn>
             <updateRate>${rate}</updateRate>
             <bodyName>${sensor_name}_odom_frame</bodyName>
-            <topicName>${sensor_name}/odom/sample</topicName>
+            <topicName>${sensor_name}/odom</topicName>
             <gaussianNoise>0.001</gaussianNoise>
-            <frameName>world</frameName>
+            <frameName>${odom_frame}</frameName>
             <xyzOffsets>0 0 0</xyzOffsets>
             <rpyOffsets>0 0 0</rpyOffsets>
         </plugin>
